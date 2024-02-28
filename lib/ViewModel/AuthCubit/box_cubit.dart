@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/email_box/email_box_state.dart';
+import 'package:prisma_app_note/ViewModel/AuthCubit/box_state.dart';
 
 class BoxBloc extends Cubit<BoxState> {
   final String type;
@@ -11,10 +11,22 @@ class BoxBloc extends Cubit<BoxState> {
   }
 
   void validate() {
-    if (input != null && input != '') {
-      emit(ValidateState());
+    if (type == "email") {
+      if (input != null &&
+          input != '' &&
+          input!.contains("@") &&
+          input!.contains(".") &&
+          input!.length > 4) {
+        emit(ValidateState());
+      } else {
+        emit(FailureState());
+      }
     } else {
-      emit(FailureState());
+      if (input != null && input != '' && input!.length > 5) {
+        emit(ValidateState());
+      } else {
+        emit(FailureState());
+      }
     }
   }
 }

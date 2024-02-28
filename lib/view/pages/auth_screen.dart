@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/email_box/email_box_cubit.dart';
+import 'package:prisma_app_note/ViewModel/AuthCubit/box_cubit.dart';
 import 'package:prisma_app_note/view/widget/auth/email_box.dart';
 import 'package:prisma_app_note/view/widget/auth/password_box.dart';
 import 'package:prisma_app_note/view/widget/auth/validate_button.dart';

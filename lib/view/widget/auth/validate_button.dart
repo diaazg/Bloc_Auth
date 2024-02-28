@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/email_box/email_box_cubit.dart';
+import 'package:prisma_app_note/ViewModel/AuthCubit/box_cubit.dart';
 
 class ValidateButton extends StatelessWidget {
   const ValidateButton(
