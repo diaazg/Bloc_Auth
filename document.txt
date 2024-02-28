@@ -1,0 +1,65 @@
+MVVM devide the project into two main layers : 
+ 1-Data layer(Model)
+ 2-Presentation layer(View , View Model) 
+ the second layer devided into two layers : 
+         1-View
+         2-View Model
+  3- difference between design and architecture pattern:
+       1-architecture is the overall structure of software but the design is concerned how the components are built
+       architecture can be design pattern but the opposite is false 
+       2-Architecture come in designing phase and design pattern come in Building phase
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prisma_app_note/ViewModel/AuthCubit/password_box/password_box_state.dart';
+
+class AuthBloc extends Cubit<AuthState> {
+  AuthBloc() : super(InitialState());
+
+  String? password;
+  String? email;
+
+  void setEmail(String? changeEmail) {
+    email = changeEmail;
+  }
+
+  void setPassword(String? changePassword) {
+    password = changePassword;
+  }
+
+  void validate() {
+    if (email != null && email != '') {
+      emit(ValidateState());
+    } else {
+      emit(FailureState());
+    }
+    if (password != null && password != '') {
+      print("hhh");
+    } else {
+      print("hhhddddddddddddddd");
+    }
+  }
+}
+
+// String? textValidator(String? value, bool tried) {
+//   if ((value == null || value.isEmpty) && tried) {
+//     return 'This field is required';
+//   } else {
+//     return null;
+//   }
+// }
+
