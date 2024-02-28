@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prisma_app_note/ViewModel/AuthCubit/email_box/email_box_cubit.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/password_box/password_box_cubit.dart';
 
 class ValidateButton extends StatelessWidget {
-  const ValidateButton({super.key, required this.formKey});
+  const ValidateButton(
+      {super.key,
+      required this.formKey,
+      required this.emailBox,
+      required this.passwordBox});
   final dynamic formKey;
+  final BoxBloc emailBox;
+  final BoxBloc passwordBox;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        BlocProvider.of<EmailBoxBloc>(context).validate();
-        BlocProvider.of<PasswordBoxBloc>(context).validate();
+        emailBox.validate();
+        passwordBox.validate();
         Future.delayed(const Duration(milliseconds: 100), () {
           if (formKey.currentState!.validate()) {
             print("Validated successfully");
