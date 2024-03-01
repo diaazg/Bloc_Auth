@@ -14,7 +14,7 @@ MVVM devide the project into two main layers :
 
 Repo pattern (Repo folder): containe file containe abstract class xhich containe all the funtion used by the services of this feature ;
 
-
+core containe thing which will used by all the app like error class or constants
 
 
 
