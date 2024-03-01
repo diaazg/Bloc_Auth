@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:prisma_app_note/core/error/failures.dart';
 import 'package:prisma_app_note/core/utils/api_service.dart';
 import 'package:prisma_app_note/data/models/user_model.dart';
@@ -19,7 +20,11 @@ class AuthRepoImp implements AuthRepo {
       }
       return right(users);
     } on Exception catch (e) {
-      return left(Serverfailure());
+      if (e is DioException) {
+        //Dio will sent u to carch when it receive status type != 200
+        Serverfailure.fromDioError(e);
+      }
+      return left(Serverfailure(e.toString()));
     }
   }
 
