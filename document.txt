@@ -12,6 +12,7 @@ MVVM devide the project into two main layers :
 
 
 
+Repo pattern (Repo folder): containe file containe abstract class xhich containe all the funtion used by the services of this feature ;
 
 
 
@@ -24,42 +25,9 @@ MVVM devide the project into two main layers :
 
 
 
-       import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/password_box/password_box_state.dart';
 
-class AuthBloc extends Cubit<AuthState> {
-  AuthBloc() : super(InitialState());
 
-  String? password;
-  String? email;
 
-  void setEmail(String? changeEmail) {
-    email = changeEmail;
-  }
 
-  void setPassword(String? changePassword) {
-    password = changePassword;
-  }
 
-  void validate() {
-    if (email != null && email != '') {
-      emit(ValidateState());
-    } else {
-      emit(FailureState());
-    }
-    if (password != null && password != '') {
-      print("hhh");
-    } else {
-      print("hhhddddddddddddddd");
-    }
-  }
-}
-
-// String? textValidator(String? value, bool tried) {
-//   if ((value == null || value.isEmpty) && tried) {
-//     return 'This field is required';
-//   } else {
-//     return null;
-//   }
-// }
 
