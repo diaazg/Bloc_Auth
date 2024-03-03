@@ -4,6 +4,8 @@ abstract class GetAllState {}
 
 class GetAllInitialState extends GetAllState {}
 
+class RegisterInitState extends GetAllState {}
+
 class GetAllSuccessState extends GetAllState {
   // ignore: prefer_typing_uninitialized_variables
   final List<UserModel> users;
@@ -18,3 +20,8 @@ class GetAllFailureState extends GetAllState {
 }
 
 class GetAllLoadingState extends GetAllState {}
+
+
+
+//register states 
+

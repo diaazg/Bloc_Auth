@@ -22,15 +22,25 @@ class AuthRepoImp implements AuthRepo {
     } on Exception catch (e) {
       if (e is DioException) {
         //Dio will sent u to carch when it receive status type != 200
-        Serverfailure.fromDioError(e);
+        return left(Serverfailure.fromDioError(e));
       }
       return left(Serverfailure("Oops there was an error , try again !"));
     }
   }
 
   @override
-  Future<Either<Failure, String>> register(String email, String password) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<Either<Failure, String>> register(
+      String email, String password) async {
+    try {
+      dynamic jsonData = UserModel(email: email, password: password).toJson();
+      await apiService.post(endPoint: 'registration', data: jsonData);
+      return right("Registration successfull");
+    } on Exception catch (e) {
+      if (e is DioException) {
+        //Dio will sent u to carch when it receive status type != 200
+        return left(Serverfailure.fromDioError(e));
+      }
+      return left(Serverfailure("Oops there was an error , try again !"));
+    }
   }
 }
