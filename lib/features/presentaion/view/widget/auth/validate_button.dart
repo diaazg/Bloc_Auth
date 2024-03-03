@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/box_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/AuthCubit/box_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/getAll/getAll_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/view/pages/home_page.dart';
 
 class ValidateButton extends StatelessWidget {
   const ValidateButton(
       {super.key,
       required this.formKey,
       required this.emailBox,
-      required this.passwordBox});
+      required this.passwordBox,
+      required this.getAllBloc});
   final dynamic formKey;
   final BoxBloc emailBox;
   final BoxBloc passwordBox;
+  final GetAllBloc getAllBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,13 @@ class ValidateButton extends StatelessWidget {
         passwordBox.validate();
         Future.delayed(const Duration(milliseconds: 100), () {
           if (formKey.currentState!.validate()) {
-            print("Validated successfully");
+            getAllBloc.fetchAllUsers();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomePage(
+                          getAllBloc: getAllBloc,
+                        )));
           }
         });
       },

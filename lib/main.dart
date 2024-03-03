@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prisma_app_note/view/pages/auth_screen.dart';
+import 'package:prisma_app_note/features/presentaion/view/pages/auth_screen.dart';
 
 void main() {
   runApp(const MyApp());

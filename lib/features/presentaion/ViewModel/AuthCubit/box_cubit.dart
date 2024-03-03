@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prisma_app_note/ViewModel/AuthCubit/box_state.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/AuthCubit/box_state.dart';
 
 class BoxBloc extends Cubit<BoxState> {
   final String type;
