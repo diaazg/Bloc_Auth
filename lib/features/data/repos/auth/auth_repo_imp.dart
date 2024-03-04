@@ -4,6 +4,7 @@ import 'package:prisma_app_note/core/error/failures.dart';
 import 'package:prisma_app_note/core/utils/api_service.dart';
 import 'package:prisma_app_note/features/data/models/user_model.dart';
 import 'package:prisma_app_note/features/data/repos/auth/auth_repos.dart';
+import 'dart:convert' show json, base64, utf8;
 
 class AuthRepoImp implements AuthRepo {
   final ApiService apiService;
@@ -12,7 +13,7 @@ class AuthRepoImp implements AuthRepo {
   @override
   Future<Either<Failure, List<UserModel>>> fetchAll() async {
     try {
-      var data = await apiService.get(endPoint: 'all');
+      var data = await apiService.get(endPoint: 'all', data: null);
       List<UserModel> users = [];
       List dataBody = data["body"];
       for (dynamic user in dataBody) {
@@ -35,6 +36,26 @@ class AuthRepoImp implements AuthRepo {
       dynamic jsonData = UserModel(email: email, password: password).toJson();
       await apiService.post(endPoint: 'registration', data: jsonData);
       return right("Registration successfull");
+    } on Exception catch (e) {
+      if (e is DioException) {
+        //Dio will sent u to carch when it receive status type != 200
+        return left(Serverfailure.fromDioError(e));
+      }
+      return left(Serverfailure("Oops there was an error , try again !"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> login(String email, String password) async {
+    try {
+      dynamic data = UserModel(email: email, password: password).toJson();
+      var result = await apiService.get(endPoint: 'login', data: data);
+      print(result);
+      String token = result["token"];
+      token = json.decode(
+          utf8.decode(base64.decode(base64.normalize(token.split(".")[1]))));
+
+      return right(token);
     } on Exception catch (e) {
       if (e is DioException) {
         //Dio will sent u to carch when it receive status type != 200
