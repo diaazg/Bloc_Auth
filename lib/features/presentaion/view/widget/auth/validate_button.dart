@@ -49,7 +49,7 @@ class ValidateButton extends StatelessWidget {
               Future.delayed(const Duration(milliseconds: 100), () {
                 if (formKey.currentState!.validate()) {
                   if (type == 'Sign in') {
-                    loginCubit.login("messi@gmail.com", "123456");
+                    loginCubit.login(emailBox.input!, passwordBox.input!);
                     // getAllBloc.fetchAllUsers();
                     // Navigator.push(
                     //     context,

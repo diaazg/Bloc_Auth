@@ -4,7 +4,7 @@ import 'package:prisma_app_note/core/error/failures.dart';
 import 'package:prisma_app_note/core/utils/api_service.dart';
 import 'package:prisma_app_note/features/data/models/user_model.dart';
 import 'package:prisma_app_note/features/data/repos/auth/auth_repos.dart';
-import 'dart:convert' show json, base64, utf8;
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthRepoImp implements AuthRepo {
   final ApiService apiService;
@@ -50,12 +50,9 @@ class AuthRepoImp implements AuthRepo {
     try {
       dynamic data = UserModel(email: email, password: password).toJson();
       var result = await apiService.get(endPoint: 'login', data: data);
-      print(result);
-      String token = result["token"];
-      token = json.decode(
-          utf8.decode(base64.decode(base64.normalize(token.split(".")[1]))));
-
-      return right(token);
+      dynamic token = result["token"];
+      token = JwtDecoder.decode(token);
+      return right(token.toString());
     } on Exception catch (e) {
       if (e is DioException) {
         //Dio will sent u to carch when it receive status type != 200
