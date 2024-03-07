@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:prisma_app_note/features/presentaion/ViewModel/getAll/getAll_cubit.dart';
-import 'package:prisma_app_note/features/presentaion/view/widget/homePage/GetAllPage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/authCubit/auth_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/authCubit/state_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/view/pages/login_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.getAllBloc});
-  final GetAllBloc getAllBloc;
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: Colors.redAccent,
-      body: Center(child: GetAllWidget(getAllBloc: getAllBloc)),
-    );
+    return BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+      if (state is UnAuth) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginPage()));
+      }
+    }, builder: (context, state) {
+      return Scaffold(
+        backgroundColor: Colors.amber,
+        body: Column(
+          children: [
+            const Text("Welcom again !!"),
+            TextButton(
+                onPressed: () {
+                  BlocProvider.of<AuthCubit>(context).logout();
+                },
+                child: const Text("Log out"))
+          ],
+        ),
+      );
+    });
   }
 }

@@ -1,7 +1,8 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:prisma_app_note/features/presentaion/ViewModel/AuthCubit/box_cubit.dart';
-import 'package:prisma_app_note/features/presentaion/ViewModel/AuthCubit/box_state.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/boxCubit/box_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/boxCubit/box_state.dart';
 
 class PasswordBox extends StatelessWidget {
   const PasswordBox({required this.passwordBox, super.key});
