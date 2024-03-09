@@ -21,7 +21,4 @@ class GetAllFailureState extends GetAllState {
 
 class GetAllLoadingState extends GetAllState {}
 
-
-
-//register states 
-
+//register states

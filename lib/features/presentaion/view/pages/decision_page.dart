@@ -16,7 +16,7 @@ class DecisionPage extends StatelessWidget {
           body: Text("Loading ..."),
         );
       } else if (state is Authentified) {
-        return const HomePage();
+        return HomePage();
       } else {
         return LoginPage();
       }

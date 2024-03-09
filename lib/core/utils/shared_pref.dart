@@ -5,10 +5,23 @@ Future<void> saveTokenToLocalStorage(String token) async {
   await prefs.setString('auth_token', token);
 }
 
-Future<String?> getTokenFromLocalStorage() async {
-  final prefs = await SharedPreferences.getInstance();
-  return prefs.getString('auth_token');
+Future<Map<String, dynamic>> getTokenFromLocalStorage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? mapAsString = prefs.getString('auth_token');
+  print(mapAsString);
+  Map<String, dynamic> retrievedMap = {
+    for (var item
+        in mapAsString!.replaceAll('{', '').replaceAll('}', '').split(','))
+      item.split(':')[0].trim(): item.split(':')[1].trim()
+  };
+
+  return retrievedMap;
 }
+
+// Future<String?> getTokenFromLocalStorage() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   return prefs.getString('auth_token');
+// }
 
 Future<void> clearTokenFromLocalStorage() async {
   final prefs = await SharedPreferences.getInstance();

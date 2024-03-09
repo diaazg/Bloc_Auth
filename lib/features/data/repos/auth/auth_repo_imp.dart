@@ -30,12 +30,18 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, String>> register(
-      String email, String password) async {
+  Future<Either<Failure, Map>> register(String email, String password) async {
     try {
       dynamic jsonData = UserModel(email: email, password: password).toJson();
-      await apiService.post(endPoint: 'registration', data: jsonData);
-      return right("Registration successfull");
+      var result =
+          await apiService.post(endPoint: 'registration', data: jsonData);
+      dynamic token = result["token"];
+      token = JwtDecoder.decode(token);
+      Map<String, dynamic> newToken = {
+        "uid": token["tokenData"]["_id"],
+        "email": token["tokenData"]["email"]
+      };
+      return right(newToken);
     } on Exception catch (e) {
       if (e is DioException) {
         //Dio will sent u to carch when it receive status type != 200
@@ -46,13 +52,17 @@ class AuthRepoImp implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, String>> login(String email, String password) async {
+  Future<Either<Failure, Map>> login(String email, String password) async {
     try {
       dynamic data = UserModel(email: email, password: password).toJson();
       var result = await apiService.get(endPoint: 'login', data: data);
       dynamic token = result["token"];
       token = JwtDecoder.decode(token);
-      return right(token.toString());
+      Map<String, dynamic> newToken = {
+        "uid": token["tokenData"]["_id"],
+        "email": token["tokenData"]["email"]
+      };
+      return right(newToken);
     } on Exception catch (e) {
       if (e is DioException) {
         //Dio will sent u to carch when it receive status type != 200

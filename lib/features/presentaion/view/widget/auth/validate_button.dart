@@ -4,6 +4,7 @@ import 'package:prisma_app_note/features/presentaion/ViewModel/authCubit/auth_cu
 import 'package:prisma_app_note/features/presentaion/ViewModel/authCubit/state_cubit.dart';
 import 'package:prisma_app_note/features/presentaion/ViewModel/boxCubit/box_cubit.dart';
 import 'package:prisma_app_note/features/presentaion/ViewModel/getAll/getAll_cubit.dart';
+import 'package:prisma_app_note/features/presentaion/ViewModel/notesCubit/notes_cubit.dart';
 import 'package:prisma_app_note/features/presentaion/view/pages/home_page.dart';
 
 class ValidateButton extends StatelessWidget {
@@ -26,19 +27,10 @@ class ValidateButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
       if (state is Authentified) {
-        print("ssssssssssssssssssssssssssssssssss \n");
-        print(state.token);
-        // getAllBloc.fetchAllUsers();
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => UsersPage(
-        //               getAllBloc: getAllBloc,
-        //             )));
+        BlocProvider.of<NotesCubit>(context).fetchNotes(state.token);
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomePage()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       } else if (state is UnAuth) {
-        // print("fffffffffffffffffffffffffffffffffffff\n");
         print(state.failure);
       }
     }, builder: (context, state) {
